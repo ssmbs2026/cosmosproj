@@ -1,0 +1,28 @@
+name: Deploy Cosmos DB Infrastructure
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          template: ./infra/main.bicep
+          parameters: location=eastus
+          deploymentName: cosmos-deployment-${{ github.run_number }}
