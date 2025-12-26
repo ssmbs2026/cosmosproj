@@ -1,5 +1,5 @@
 param location string = resourceGroup().location
-param accountName string = 'cosmos-${uniqueString(resourceGroup().id)}'
+param accountName string = 'cosmos-${uniqueString(resourceGroup().id)}-v2'
 param databaseName string = 'FileStorageDb'
 
 resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2024-05-15' = {
